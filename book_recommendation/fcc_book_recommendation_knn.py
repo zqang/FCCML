@@ -54,9 +54,9 @@ from sklearn.neighbors import NearestNeighbors
 import matplotlib.pyplot as plt
 
 # get data files
-!wget https://cdn.freecodecamp.org/project-data/books/book-crossings.zip
+# !wget https://cdn.freecodecamp.org/project-data/books/book-crossings.zip
 
-!unzip book-crossings.zip
+# !unzip book-crossings.zip
 
 books_filename = 'BX-Books.csv'
 ratings_filename = 'BX-Book-Ratings.csv'
@@ -84,13 +84,25 @@ print(df_books.shape)
 print(list(df_books.columns))
 df_books.head()
 
-# If you graph the dataset (optional), you will notice that most books are not rated frequently. To ensure statistical significance, 
-# remove from the dataset users with less than 200 ratings and books with less than 100 ratings.
+df_ratings.head()
 
-counts1 = df_ratings['user'].value_counts()
-df_ratings = df_ratings[df_ratings['user'].isin(counts1[counts1 >= 200].index)]
-counts = df_ratings['rating'].value_counts()
-df_ratings = df_ratings[df_ratings['rating'].isin(counts[counts >= 100].index)]
+#check null data
+df_books.isnull().sum()
+
+df_ratings.isnull().sum()
+
+df_books.dropna(inplace=True)
+
+df_books.isnull().sum()
+
+books = ["Where the Heart Is (Oprah's Book Club (Paperback))",
+        "I'll Be Seeing You",
+        "The Weight of Water",
+        "The Surgeon",
+        "I Know This Much Is True"]
+
+for book in books:
+  print(df_ratings.isbn.isin(df_books[df_books.title == book].isbn).sum())
 
 df = df_ratings
 
